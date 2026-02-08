@@ -18,4 +18,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Команда для запуска бота
-CMD ["python", "TgYt.py"]
+CMD ["python", "bottg.py"]
