@@ -1,4 +1,2 @@
-python-telegram-bot
-yt-dlp
-asyncio
 python-telegram-bot==20.3
+yt-dlp
