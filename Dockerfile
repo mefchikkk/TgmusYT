@@ -17,5 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Копируем все остальные файлы бота в контейнер
 COPY . .
 
-# Команда для запуска бота
-CMD ["python", "bottg.py"]
+CMD ["python", "-u", "bottg.py"]
