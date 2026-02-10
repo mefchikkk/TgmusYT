@@ -15,12 +15,25 @@ logging.basicConfig(level=logging.INFO)
 
 # Ультра-легкие настройки для 50МБ памяти
 YDL_OPTS = {
-    'format': 'worst[ext=mp4]/best', # Качаем самый маленький файл, чтобы не вылететь по памяти
+    'format': 'worst[ext=mp4]/best', # Самое легкое видео
     'outtmpl': str(TEMP_DIR / '%(title)s.%(ext)s'),
     'noplaylist': True,
-    'quiet': False, # Видим логи в консоли!
+    'quiet': False,
+    'verbose': True,
+    
+    # --- НАБОР ДЛЯ ОБХОДА БЛОКИРОВОК ---
+    'source_address': '0.0.0.0',       # Принудительно IPv4 (самое важное!)
+    'nocheckcertificate': True,        # Игнорировать ошибки SSL
+    'socket_timeout': 30,              # Дать серверу больше времени на ответ
+    'retries': 5,                      # Пробовать 5 раз, если не вышло
+    'extractor_args': {
+        'youtube': {
+            'player_client': ['android', 'web'],
+            'skip': ['dash', 'hls']    # Пропускаем сложные протоколы
+        }
+    },
+    'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36'
 }
-
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         await update.message.reply_photo(
@@ -68,4 +81,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
