@@ -1,7 +1,16 @@
 FROM python:3.10-slim
 
-# Устанавливаем только самое необходимое
-RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
+# Отключаем буферизацию логов
+ENV PYTHONUNBUFFERED=1
+
+# Устанавливаем ffmpeg и необходимые инструменты
+RUN apt-get update && \
+    apt-get install -y ffmpeg && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Проверяем, что ffmpeg установился (выведется в логи сборки)
+RUN ffmpeg -version
 
 WORKDIR /app
 
@@ -10,5 +19,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Запуск напрямую через python
 CMD ["python", "bottg.py"]
